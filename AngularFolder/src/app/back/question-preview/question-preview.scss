@@ -1,0 +1,126 @@
+.form-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.center-text {
+  text-align: center;
+}
+
+.form-title {
+  font-size: 32px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-time {
+  font-size: 14px;
+  color: #777;
+  display: block;
+}
+
+.form-description {
+  margin: 20px 0 30px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.form-title {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.form-time {
+  font-size: 14px;
+  color: #777;
+}
+
+.form-description {
+  margin: 20px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.user-info {
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: inline-block;
+  width: 60px;
+}
+
+.form-group input {
+  padding: 6px 10px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.question-list {
+  margin-top: 20px;
+}
+
+.question-block {
+  border-top: 1px solid #eee;
+  padding: 15px 0;
+}
+
+.question-header {
+  margin-bottom: 8px;
+}
+
+.question-type {
+  font-size: 13px;
+  color: #999;
+  margin-right: 6px;
+}
+
+.question-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.answer-option {
+  margin-left: 20px;
+  margin-top: 6px;
+}
+
+.answer-option input {
+  margin-right: 6px;
+}
+
+.button-group {
+  margin-top: 30px;
+  text-align: right;
+}
+
+.button-group button {
+  background-color: #4a90e2;
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.button-group button:hover {
+  background-color: #357abd;
+}

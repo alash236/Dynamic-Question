@@ -1,0 +1,55 @@
+<h1 class="login_title">會員註冊</h1>
+
+<div align="center">
+  <div class="login_wrap">
+
+    <div class="login_div">
+      <mat-icon class="login_icon">person</mat-icon>
+      <input [(ngModel)]="signUpEmail" placeholder="輸入電子郵件" type="email" class="login_input" (ngModelChange)="checkEmailFunction($event)"/>
+      <div>
+        @if(changeTypeEmail){
+        <label style="color:red; font-size: 10px;">電子信箱已存在</label>
+      }
+      </div>
+    </div>
+
+    <div class="login_div">
+      <mat-icon class="login_icon">person_outline</mat-icon>
+      <input [(ngModel)]="signUpUsername" placeholder="輸入使用者名稱" type="text" class="login_input"/>
+    </div>
+
+    <div class="login_div">
+      <mat-icon class="login_icon">lock</mat-icon>
+      @if(changetype){
+        <input [(ngModel)]="signUpPassword" placeholder="輸入密碼" type="text" class="login_input" />
+      } @else {
+        <input [(ngModel)]="signUpPassword" placeholder="輸入密碼" type="password" class="login_input" />
+      }
+      <button class="login_eye_button" (click)="changeType()">
+        @if(changetype){
+          <mat-icon>visibility</mat-icon>
+        } @else {
+          <mat-icon>visibility_off</mat-icon>
+        }
+      </button>
+    </div>
+
+    <div class="login_div">
+      <mat-icon class="login_icon">lock</mat-icon>
+      <input [(ngModel)]="signUpConfirmPassword" placeholder="確認密碼" type="password" class="login_input" />
+    </div>
+
+    <div class="login_div">
+      <mat-icon class="login_icon">phone</mat-icon>
+      <input [(ngModel)]="signUPPhone" placeholder="請輸入手機" type="text" class="login_input" />
+    </div>
+
+    <div class="login_div">
+      <mat-icon class="login_icon">check cicle</mat-icon>
+      <input [(ngModel)]="signUpAge" placeholder="請輸入年齡" type="text" class="login_input" />
+    </div>
+
+    <button class="login_button" (click)="submitForm()">註冊</button>
+
+  </div>
+</div>

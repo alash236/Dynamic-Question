@@ -1,0 +1,102 @@
+<div class="container">
+  <div class="form-wrapper">
+    <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+      <mat-tab label="題目設定">
+        <div class="form-content">
+          <div class="form-group">
+            <label for="questionName">問卷名稱:</label>
+            <input id="questionName" [(ngModel)]="questionName" type="text" placeholder="請輸入問卷名稱(20字以下)" maxlength="20" />
+          </div>
+
+          <div class="form-group">
+            <label for="questionText">問卷說明:</label>
+            <textarea id="questionText" [(ngModel)]="questionText" placeholder="請為問卷添加說明(300字以下)" maxlength="300" rows="4"></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group small">
+              <label for="startDate">開始日期:</label>
+              <input id="startDate" type="date" [(ngModel)]="questionStart" [min]="today" [max]="maxStartTime" />
+            </div>
+
+            <div class="form-group small">
+              <label for="endDate">結束日期:</label>
+              <input id="endDate" type="date" [(ngModel)]="questionEnd" [min]="today" [max]="maxEndTime" [disabled]="!questionStart" />
+            </div>
+          </div>
+        </div>
+        <div class="button-row">
+          <button class="btn-primary" (click)="questionTitleCheck()">下一步</button>
+          <button class="btn-secondary" (click)="questionTitleCancel()">取消</button>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="題型設定" [disabled]="!titleCheck">
+        <button class="btn-primary" (click)="AddTopic()">新增題目</button>
+        @for(topic of quizList;track $index;let t = $index){
+        <div class="topic-block">
+          <h3>題目名稱</h3>
+          <div class="form-row align-center">
+            <input [(ngModel)]="quizList[t].name" placeholder="題目名稱" />
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="quizList[t].is_required" />
+              是否必填
+            </label>
+            <label>選擇題型</label>
+            <select [(ngModel)]="quizList[t].type" (ngModelChange)="onAnswerTypeChange(t)">
+              <option value="single">單選題</option>
+              <option value="multiple">多選題</option>
+              <option value="text">文字題</option>
+            </select>
+          </div>
+          @if(quizList[t].type!='text'){
+          <button class="btn-secondary" (click)="AddAnswer(t)">新增答案</button>
+          <div class="answers">
+            @for(answer of topic.option;track $index;let a = $index){
+              <input [(ngModel)]="quizList[t].option[a]" placeholder="答案" />
+              <button type="button" class="btn-delete" (click)="removeAnswer(t, a)">刪除</button>
+            }
+          </div>
+        }
+        </div>
+      }
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>名稱</th>
+              <th>類型</th>
+              <th>必填</th>
+              <th>刪除</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(topic of quizList;track $index; let i = $index){
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ topic.name }}</td>
+              <td>
+                {{ topic.type === 'single' ? '單選' : topic.type === 'multiple' ? '多選' : '文字' }}
+              </td>
+              <td>
+                @if(topic.is_required){
+                  <mat-icon color="primary">check</mat-icon>
+                }
+              </td>
+              <td (click)="deleteTopic(i)" class="delete-cell">
+                <mat-icon color="warn">delete</mat-icon>
+              </td>
+            </tr>
+          }
+          </tbody>
+        </table>
+
+        <div class="button-row">
+          <button class="btn-primary" (click)="questionTopicCheck()">下一步</button>
+          <button class="btn-secondary" (click)="questionTopicCancel()">取消</button>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

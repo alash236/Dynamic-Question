@@ -1,0 +1,129 @@
+.back-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* 搜尋區 */
+.back-search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #ddd;
+}
+
+.search-icon {
+  font-size: 28px;
+  color: #4a90e2;
+  margin-right: 6px;
+  user-select: none;
+}
+
+.back-input {
+  flex: 1 1 180px;
+  min-width: 150px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+
+.back-input:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+.back-label {
+  font-weight: 600;
+  margin-left: 8px;
+  white-space: nowrap;
+  color: #555;
+}
+
+/* 按鈕列 */
+.back-bar {
+  margin: 20px 0 30px 0;
+  display: flex;
+  gap: 16px;
+}
+
+.back-bar button {
+  box-shadow: 0 3px 8px rgb(0 0 0 / 0.15);
+  transition: box-shadow 0.3s ease;
+}
+
+.back-bar button:hover {
+  box-shadow: 0 5px 15px rgb(0 0 0 / 0.25);
+  cursor: pointer;
+}
+
+/* 表格區 */
+.back-table {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mat-header-cell {
+  font-weight: 700;
+  color: #2c3e50;
+  border-bottom: 2px solid #e0e0e0;
+  padding: 12px 15px;
+  text-align: center;
+}
+
+.mat-cell {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.mat-row:hover {
+  background-color: #f0f7ff;
+  cursor: pointer;
+}
+
+.update-icon{
+  color: #4a90e2;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.update-icon:hover{
+  color: #2d149c;
+}
+
+.close-icon{
+  color:red
+}
+
+/* 刪除圖示 */
+.delete-icon {
+  color: #e53935;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.delete-icon:hover {
+  color: #ab000d;
+}
+
+/* 分頁器 */
+mat-paginator {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+}
+input[disabled]{
+  color: #c1b9b9;
+  cursor:not-allowed
+}

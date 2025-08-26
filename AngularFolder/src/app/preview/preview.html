@@ -1,0 +1,35 @@
+<div class="form-wrapper">
+  <h1 class="title">{{ name }}</h1>
+  <p class="date">{{ start }} ~ {{ end }}</p>
+  <p class="description">{{ text }}</p>
+
+  <section class="user-info">
+    <h2>使用者資訊</h2>
+    <ul>
+      <li><strong>姓名：</strong>{{ username }}</li>
+      <li><strong>手機：</strong>{{ userphone }}</li>
+      <li><strong>信箱：</strong>{{ usermail }}</li>
+      <li><strong>年齡：</strong>{{ userage }}</li>
+    </ul>
+  </section>
+
+  <section class="questions">
+    @for (question of quizList; track $index; let i = $index) {
+      <div class="question-block">
+        <h3>{{question.name}}</h3>
+        <p class="answer">你的答案：
+          {{answerList[i]}}
+        </p>
+      </div>
+    }
+  </section>
+
+  <div class="button-group">
+    <button (click)="back()">上一頁</button>
+    @if(!backcheck){
+      <button  (click)="go_statistics()">儲存</button>
+    }@else{
+      <button  [routerLink]="['/back']">回後台列表</button>
+    }
+  </div>
+</div>

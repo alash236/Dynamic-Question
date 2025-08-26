@@ -1,0 +1,60 @@
+/* 按鈕容器靠右排 */
+.btn-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+
+/* 回首頁按鈕樣式 */
+.home-btn {
+  padding: 0.5rem 1rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.home-btn:hover {
+  background-color: #45a049;
+}
+
+/* 整體容器 */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* 問題標題 */
+.question-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+/* 每一題的區塊 */
+.topic-block {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 題目標題 */
+.quiz-title {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  color: #555;
+}
+
+/* Canvas 的基本設定 */
+canvas {
+  width: 100% !important;
+  max-height: 300px;
+}
+

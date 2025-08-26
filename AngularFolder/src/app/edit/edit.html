@@ -1,0 +1,95 @@
+<div class="update-container">
+  <h2>更新問卷</h2>
+
+  <form (ngSubmit)="onSubmit()" #surveyForm="ngForm">
+
+    <!-- 問卷標題 -->
+    <div class="form-group">
+      <label for="title">問卷標題</label>
+      <input type="text" id="title" name="title" [(ngModel)]="questionName" required />
+    </div>
+
+    <!-- 問卷描述 -->
+    <div class="form-group">
+      <label for="description">問卷描述</label>
+      <textarea id="description" name="description" rows="4" [(ngModel)]="questionText" required></textarea>
+    </div>
+
+    <!-- 開始與結束時間 -->
+    <div class="form-group time-group">
+      <div>
+        <label for="start_Time">開始時間</label>
+        <input type="date" id="start_Time" name="start_Time" [(ngModel)]="questionStart" [min]="today" [max]="maxStartTime"  required />
+      </div>
+      <div>
+        <label for="end_Time">結束時間</label>
+        <input type="date" id="end_Time" name="end_Time" [(ngModel)]="questionEnd" [min]="today" [max]="maxEndTime"  required />
+      </div>
+    </div>
+
+    <!-- 新增題目按鈕 -->
+    <div class="form-group">
+      <button type="button" (click)="addTopic()">➕ 新增題目</button>
+    </div>
+
+    <!-- 問卷問題列表 -->
+    <div class="form-group">
+      <label>問卷問題</label>
+
+      @for (quiz of quizList; track $index; let i = $index) {
+        <div class="quiz-item">
+
+          <!-- 題目名稱與刪除題目 -->
+          <div class="question-group">
+            <label>
+              問題 {{ i + 1 }}
+              <button type="button" (click)="AddAnswer(i)">➕ 新增答案</button>
+              <button type="button" (click)="deleteTopic(i)">🗑️ 刪除題目</button>
+            </label>
+            <input type="text" [(ngModel)]="quiz.name" name="quiz_name{{i}}" required />
+          </div>
+
+          <!-- 題型與是否必填 -->
+          <div class="question-settings">
+            <label>
+              <input type="checkbox" name="required_{{i}}" [(ngModel)]="quiz.is_required" /><br>
+              必填
+            </label>
+
+            <select name="select_{{i}}" [(ngModel)]="quiz.type" (ngModelChange)="onAnswerTypeChange(i)">
+              <option value="single">單選題</option>
+              <option value="multiple">多選題</option>
+              <option value="text">文字題</option>
+            </select>
+          </div>
+
+          <!-- 題目選項 -->
+          @if (quiz.type != 'text') {
+            <div class="option-list">
+              @for (item of quiz.option; track $index; let j = $index) {
+                <div class="option-item">
+                  <label>
+                    選項 {{ j + 1 }}
+                    <button type="button" (click)="removeAnswer(i,j)">🗑️ 刪除選項</button>
+                  </label>
+                  <input type="text" [(ngModel)]="quiz.option[j]" name="option_{{i}}_{{j}}" required />
+                </div>
+              }
+            </div>
+          }
+
+        </div>
+      }
+    </div>
+
+    <!-- 操作按鈕 -->
+    <div class="form-actions">
+      <button type="submit">✅ 儲存變更</button>
+      @if (questionPublish) {
+        <button (click)="insertDB()">發布</button>
+      }
+      <button type="button" (click)="onCancel()">❌ 取消</button>
+    </div>
+
+  </form>
+</div>

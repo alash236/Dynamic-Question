@@ -1,0 +1,70 @@
+<div class="form-container">
+
+  <div class="header center-text">
+    <label class="form-title">{{ name }}</label><br />
+    <label class="form-time">{{ start_Time }} ~ {{ end_Time }}</label>
+  </div>
+
+  <h4 class="form-description center-text">{{ text }}</h4>
+
+  <!-- 題目清單 -->
+  <div class="question-list">
+@for (datas of quizList; track $index; let t = $index) {
+  <div class="question-block">
+    <div class="question-header">
+      <label class="question-type">
+        @if (datas.type == 'single' && datas.is_required) {
+          *(單選題)
+        } @else if (datas.type == 'multiple' && datas.is_required ) {
+          *(多選題)
+        } @else if (datas.type == 'text'&& datas.is_required) {
+          *(文字題)
+        }@else if(datas.type == 'single' && !datas.is_required){
+          (單選題)
+        }@else if(datas.type == 'multiple' && !datas.is_required){
+          (多選題)
+        }@else if(datas.type == 'text' && !datas.is_required){
+          (文選題)
+        }
+      </label>
+      <label class="question-title">{{ datas.name }}</label>
+    </div>
+
+    @if (datas.type == 'single' || datas.type == 'multiple') {
+      @for (data of datas.option; track $index; let i = $index) {
+        <div class="answer-option">
+          @if (datas.type == 'single') {
+            <input
+              type="radio"
+              [disabled]="true"
+            />
+            <label>{{ data }}</label>
+          } @else if (datas.type == 'multiple') {
+            <input
+              type="checkbox"
+              [disabled]="true"
+            />
+            <label>{{ data }}</label>
+          }
+        </div>
+      }
+    } @else if (datas.type == 'text') {
+      <div class="answer-option">
+        <input
+          type="text"
+          [disabled]="true"
+          placeholder="請輸入您的答案"
+        />
+      </div>
+    }
+  </div>
+}
+  </div>
+
+  <!-- 預覽按鈕 -->
+  <div class="button-group">
+    <button style="margin-right: 10px;"(click)="go_pre()">上一頁</button>
+    <button style="margin:0px 10px 0px 10px;"(click)="cache()">暫存</button>
+    <button (click)="save()">送出</button>
+  </div>
+</div>

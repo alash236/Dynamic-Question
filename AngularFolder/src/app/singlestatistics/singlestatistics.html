@@ -1,0 +1,16 @@
+<div class="btn-container">
+  <button class="home-btn" (click)="back()">回首頁</button>
+</div>
+
+<div class="container">
+  <div class="question-block">
+    <h1 class="question-title">{{ questionName }}</h1>
+
+    @for (quiz of quizList; track $index; let i = $index) {
+      <div class="topic-block">
+        <h3 class="quiz-title">{{ quiz.name }}</h3>
+        <canvas id="chart-{{i}}"></canvas>
+      </div>
+    }
+  </div>
+</div>

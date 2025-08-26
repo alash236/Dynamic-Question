@@ -1,0 +1,120 @@
+<div class="front-container">
+  <section class="search-area">
+    <mat-icon aria-hidden="false" fontIcon="search" class="search-icon"></mat-icon>
+
+    <input
+      [(ngModel)]="search_name"
+      (keyup)="search_name_function()"
+      placeholder="搜尋問卷名稱"
+      type="text"
+      class="front-input"
+    />
+
+    <label class="front-label" for="start-date">開始時間:</label>
+    <input
+      id="start-date"
+      [(ngModel)]="search_start_time"
+      (change)="search_name_function()"
+      type="date"
+      class="front-input"
+      [min]="today"
+      [max]="maxStartTime"
+    />
+
+    <label class="front-label" for="end-date">結束時間:</label>
+    <input
+      id="end-date"
+      [(ngModel)]="search_end_time"
+      (change)="search_name_function()"
+      type="date"
+      class="front-input"
+      [min]="today"
+      [max]="maxEndTime"
+      [disabled]="!search_start_time"
+    />
+    @if(!checkLogin){
+      <button mat-fab color="primary" aria-label="登入" (click)="login()" class="login-btn">
+        <mat-icon>person</mat-icon>
+      </button>
+    }@else{
+      <button mat-fab color="primary" aria-label="登出" (click)="loginout()" class="login-btn">
+        <mat-icon>logout</mat-icon>
+      </button>
+    }
+  </section>
+
+  <section class="table-area">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <!-- 編號 -->
+      <ng-container matColumnDef="question_ID">
+        <th mat-header-cell *matHeaderCellDef>編號</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <!-- 名稱 -->
+      <ng-container matColumnDef="question_name">
+        <th mat-header-cell *matHeaderCellDef>名稱</th>
+        <td mat-cell *matCellDef="let element">
+          <a [routerLink]="['/singlestatistics', element.id]" class="link-style">
+            {{ element.name }}
+          </a>
+        </td>
+      </ng-container>
+
+      <!-- 狀態 -->
+      <ng-container matColumnDef="question_state">
+        <th mat-header-cell *matHeaderCellDef>狀態</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [ngStyle]="{ color: getQuestionState(element) === '進行中' ? 'blue' : 'black' }"
+        >
+          {{ getQuestionState(element) }}
+        </td>
+      </ng-container>
+
+      <!-- 開始時間 -->
+      <ng-container matColumnDef="date_start">
+        <th mat-header-cell *matHeaderCellDef>開始時間</th>
+        <td mat-cell *matCellDef="let element">{{ element.start_Time }}</td>
+      </ng-container>
+
+      <!-- 結束時間 -->
+      <ng-container matColumnDef="date_end">
+        <th mat-header-cell *matHeaderCellDef>結束時間</th>
+        <td mat-cell *matCellDef="let element">{{ element.end_Time }}</td>
+      </ng-container>
+
+      <!-- 結果 -->
+      <ng-container matColumnDef="date_write">
+        <th mat-header-cell *matHeaderCellDef>結果</th>
+        <td mat-cell *matCellDef="let element">
+          @if(getQuestionState(element)=='進行中'){
+            @if(checkLogin){
+              <a [routerLink]="['/question', element.id]">填寫</a>
+            }@else{
+              <label>填寫</label>
+            }
+          }
+          @if(getQuestionState(element)=='尚未開始'){
+            <label>尚未開始</label>
+          }
+          @if(getQuestionState(element)=='已結束'){
+            <label>已關閉</label>
+          }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="分頁選擇"
+    >
+    </mat-paginator>
+  </section>
+</div>
