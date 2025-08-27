@@ -27,6 +27,7 @@ export class Front {
   search_end_time:string="";
   searchArray:any[]=[];
   checkLogin:boolean = false;
+  answeredList: number[] = [];
 
   displayedColumns: any[] = ['question_ID','question_name','question_state','date_start','date_end','date_write'];
   dataSource = new MatTableDataSource<any>();
@@ -34,6 +35,7 @@ export class Front {
   today:string='';
   maxStartTime:string='';
   maxEndTime:string='';
+  isWrite:boolean = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   frontList:any[]=[];
@@ -52,8 +54,17 @@ export class Front {
       this.searchArray = res.allQuestion;
       this.service.$checkLogin.subscribe((res:boolean)=>{
         this.checkLogin = res;
+
+        if (this.checkLogin) {
+          const userData = this.service.getUserData();
+          this.http.getApi(`http://localhost:8080/search/feedback/${userData.email}`).subscribe((writeres: any) => {
+            this.answeredList = writeres.allFeedBack.map((a: any) => a.question_id);
+          });
+        }
       })
     });
+
+
 
 
   }
@@ -106,6 +117,9 @@ export class Front {
     return "未知狀態";
   }
 
+  isAnswered(questionId: number): boolean {
+    return this.answeredList.includes(questionId);
+  }
 
 
 }

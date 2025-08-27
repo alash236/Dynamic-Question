@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClientService } from '../@service/HttpClientService';
 import { format } from 'date-fns';
 import { RouterModule } from '@angular/router';
+import { isEmpty } from 'rxjs';
 @Component({
   selector: 'app-preview',
   imports: [CommonModule, RouterModule],
@@ -36,6 +37,7 @@ export class Preview {
   }
 
   backcheck = false;
+  updateCheck = false;
 element: any;
   constructor(
     private location: Location,
@@ -54,11 +56,27 @@ element: any;
     })
     this.http.getApi(`http://localhost:8080/searchQuiz/${this.question_ID}`).subscribe((res:any)=>{
       this.quizList = res.allQuestion
+      console.log(this.quizList)
     })
 
     this.route.queryParams.subscribe((params)=>{
+      const update = params['update'];
       const back = params['backcheck'];
-      if(back){
+      if(update){
+        this.updateCheck = true;
+        this.service.$updateDataSource.subscribe((res:any)=>{
+          for(let item of res.answerList){
+            this.answerList.push(item.answeroption)
+          }
+        })
+
+        this.userList = this.service.getUserData();
+        this.username = this.userList.name
+        this.usermail = this.userList.email
+        this.userphone = this.userList.phone
+        this.userage = this.userList.age+""
+
+      }else if(back){
         this.backcheck=true;
         this.service.$feedbackData.subscribe((feedbackData:any)=>{
           this.http.getApi(`http://localhost:8080/searchUser/${feedbackData.email}`).subscribe((userdata:any)=>{
@@ -93,6 +111,23 @@ element: any;
     this.location.back();
   }
   go_statistics() {
+    const hasUnansweredRequired = this.quizList.some((quiz, index) => {
+      const answer = this.answerList[index];
+
+      if (!quiz.is_required) return false;
+
+      return (
+        answer === undefined ||
+        answer === null ||
+        (Array.isArray(answer) && answer.length === 0)
+      )
+    });
+
+    if (hasUnansweredRequired) {
+      alert("請完成所有必填題");
+      return;
+    }
+
     const formattedAnswers = this.quizList.map((quiz, index) => {
       return {
         question_id: this.question_ID,
@@ -116,6 +151,43 @@ element: any;
       })
       alert("儲存答案成功");
       this.router.navigate(['/front'])
+    })
+  }
+
+  update(){
+    const hasUnansweredRequired = this.quizList.some((quiz, index) => {
+      const answer = this.answerList[index];
+
+      if (!quiz.is_required) return false;
+
+      return (
+        answer === undefined ||
+        answer === null ||
+        (Array.isArray(answer) && answer.length === 0)
+      )
+    });
+
+    if (hasUnansweredRequired) {
+      alert("請完成所有必填題");
+      return;
+    }
+
+    const formattedAnswers = this.quizList.map((quiz, index) => {
+      return {
+        question_id: this.question_ID,
+        quiz_id: quiz.quiz_id,
+        username:this.usermail,
+        answeroption: this.answerList[index]
+      };
+    });
+    const data = {
+      answerList: formattedAnswers
+    };
+    this.http.delApi(`http://localhost:8080/delete/answerFromMail/${this.question_ID}/${this.usermail}`).subscribe((res:any)=>{
+      this.http.postApi(`http://localhost:8080/add/answer`,data).subscribe((res:any)=>{
+        alert("更新答案成功");
+        this.router.navigate(['/front'])
+      })
     })
   }
 }

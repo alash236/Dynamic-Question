@@ -1,26 +1,19 @@
-
 import { Component } from '@angular/core';
+import { HttpClientService } from '../@service/HttpClientService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Service } from '../@service/service';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientService } from '../@service/HttpClientService';
+import { CommonModule } from '@angular/common';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-question',
+  selector: 'app-update',
   imports: [CommonModule,FormsModule],
-  templateUrl: './question.html',
-  styleUrl: './question.scss'
+  templateUrl: './update.html',
+  styleUrl: './update.scss'
 })
-export class Question {
+export class Update {
 
-  constructor(
-    private service:Service,
-    private router:Router,
-    private route:ActivatedRoute,
-    private http:HttpClientService){}
-
-  //使用者資訊
   username='';
   userphone='';
   usermail='';
@@ -32,17 +25,27 @@ export class Question {
     email:"",
     age:0,
   }
+
   //題目資訊
   name:string='';
   text:string='';
   start:string='';
   end:string='';
+
   //選項資訊
   quizList:any[]=[];
   //選完的答案
   answerList:any[] = [];
 
   question_ID:number=0;
+
+  constructor(
+    private http:HttpClientService,
+    private router:Router,
+    private route:ActivatedRoute,
+    private service:Service,
+    private location:Location){}
+
   ngOnInit(): void {
     this.question_ID = Number(this.route.snapshot.paramMap.get('id'));
     //找出對應id值得問卷
@@ -52,6 +55,7 @@ export class Question {
       this.start = res.question.start_Time;
       this.end = res.question.end_Time;
     })
+
     //根據對應id值問卷找出對應的題目
     this.http.getApi(`http://localhost:8080/searchQuiz/${this.question_ID}`).subscribe((res:any)=>{
       this.quizList = res.allQuestion;
@@ -69,6 +73,7 @@ export class Question {
     this.usermail = this.userList.email
     this.userphone = this.userList.phone
     this.userage = this.userList.age+""
+
   }
 
   onCheckboxChange(index: number, value: string, event: any) {
@@ -87,12 +92,7 @@ export class Question {
     }
   }
 
-
-  go_front(){
-    this.router.navigate(['./front']);
-  }
-
-  go_pre(){
+  update(){
     const formattedAnswers = this.quizList.map((quiz, index) => {
       return {
         question_id: this.question_ID,
@@ -106,7 +106,12 @@ export class Question {
     const data = {
       answerList: formattedAnswers
     };
-    this.service.setQuestionData(data);
-    this.router.navigate(['/preview',this.question_ID])
+    this.service.setUpdateData(data);
+    this.router.navigate(['/preview',this.question_ID],{queryParams:{update:true}})
   }
+
+  back_location(){
+    this.location.back();
+  }
+
 }

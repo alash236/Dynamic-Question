@@ -33,8 +33,8 @@ export class BackAdd {
   quizList=[{
     quiz_id:0,
     name:'',
-    type:'',
-    option:[] as any,
+    type:'single',
+    option:['',''],
     is_required:false
   }]
 
@@ -111,8 +111,8 @@ export class BackAdd {
       quiz_id:0,
       name: "",
       type: "single",
+      is_required: false,
       option: ["",""],
-      is_required: false
     });
   }
   AddAnswer(index:number){

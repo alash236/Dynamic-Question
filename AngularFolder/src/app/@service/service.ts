@@ -39,4 +39,11 @@ export class Service {
     this.feedbackData.next(data);
   }
 
+  private updateDateSource = new BehaviorSubject<any>(null);
+  public $updateDataSource = this.updateDateSource.asObservable();
+
+  setUpdateData(data:any){
+    this.updateDateSource.next(data);
+  }
+
 }

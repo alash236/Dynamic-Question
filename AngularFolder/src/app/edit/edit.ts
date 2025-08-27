@@ -37,7 +37,7 @@ export class Edit {
       this.questionText = questionRes.question.text;
       this.questionStart = questionRes.question.start_Time;
       this.questionEnd = questionRes.question.end_Time;
-      this.questionPublish = questionRes.question.is_required;
+      this.questionPublish = questionRes.question.publish;
 
       this.http.getApi(`http://localhost:8080/searchQuiz/${this.question_id}`).subscribe((quizRes:any)=>{
         this.quizList = quizRes.allQuestion;
@@ -72,7 +72,7 @@ export class Edit {
     })
   }
 
-  insertDB(){
+  OnCache(){
     if(!this.questionTitleCheck()){
       return;
     }
@@ -84,7 +84,7 @@ export class Edit {
       text: this.questionText,
       start_Time: this.questionStart,
       end_Time: this.questionEnd,
-      publish: true,
+      publish: false,
       quizList: this.quizList.map((quiz, index) => ({
         quiz_id: index + 1,
         name: quiz.name,
@@ -93,7 +93,9 @@ export class Edit {
         is_required: quiz.is_required
       }))
     }
-    this.http.postApi(``,data).subscribe()
+    this.http.putApi(`http://localhost:8080/update/question/${this.question_id}`,data).subscribe((res:any)=>{
+
+    })
   }
 
   onCancel(){

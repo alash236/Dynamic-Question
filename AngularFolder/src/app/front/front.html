@@ -92,7 +92,12 @@
         <td mat-cell *matCellDef="let element">
           @if(getQuestionState(element)=='進行中'){
             @if(checkLogin){
-              <a [routerLink]="['/question', element.id]">填寫</a>
+              @if(isAnswered(element.id)){
+                <a [routerLink]="['/update', element.id]">更新</a>
+              }
+              @else{
+                <a [routerLink]="['/question', element.id]">填寫</a>
+              }
             }@else{
               <label>填寫</label>
             }

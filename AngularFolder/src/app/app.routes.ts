@@ -11,6 +11,7 @@ import { Preview } from './preview/preview';
 import { Singlestatistics } from './singlestatistics/singlestatistics';
 import { Feedback } from './feedback/feedback';
 import { Edit } from './edit/edit';
+import { Update } from './update/update';
 
 
 
@@ -29,6 +30,7 @@ export const routes: Routes = [
   {path:'back',component:Back},
   {path:'back/add',component:BackAdd},
   {path:'back/questionPreview',component:QuestionPreview},
-  {path:'edit/:id',component:Edit}
+  {path:'edit/:id',component:Edit},
+  {path:'update/:id',component:Update}
 
 ];

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table'
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Service } from './../@service/service';
 import { HttpClientService } from '../@service/HttpClientService';
 import { format } from 'date-fns';
@@ -21,7 +21,6 @@ export class Feedback {
   constructor(
     private service:Service,
     private router:Router,
-    private route:ActivatedRoute,
     private http:HttpClientService){}
 
   ngOnInit(): void {
