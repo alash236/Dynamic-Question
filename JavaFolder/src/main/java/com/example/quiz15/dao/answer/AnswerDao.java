@@ -25,8 +25,16 @@ public interface AnswerDao extends JpaRepository<Answer,Integer> {
     @Query(value = "select * from answer where question_id = :question_id",nativeQuery = true)
     public List<Answer> getAnswer(int question_id);
 
+    @Query(value = "select * from answer where username = :username",nativeQuery = true)
+    public List<Answer> getEmailAnswer(String username);
+
     @Modifying
     @Transactional
     @Query(value ="delete from answer where question_id = :question_id" ,nativeQuery = true)
     public void deleteAnswer(int question_id);
+
+    @Modifying
+    @Transactional
+    @Query(value ="delete from answer where question_id = :question_id and username = :username" ,nativeQuery = true)
+    public void deleteAnswerFromMail(int question_id,String username);
 }

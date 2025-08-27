@@ -27,6 +27,11 @@ public class FeedBackController {
         return ResponseEntity.ok(feedBackService.searchFeedBack());
     }
 
+    @GetMapping("/search/feedback/{email}")
+    public ResponseEntity<FeedBackRep> searchFeedBackEmail(@PathVariable String email) {
+        return ResponseEntity.ok(feedBackService.searchFeedBackEmail(email));
+    }
+
     @DeleteMapping("/delete/feedback/{question_id}")
     public ResponseEntity<FeedBackRep> deleteFeedBack(@PathVariable int question_id){
         return ResponseEntity.ok(feedBackService.deleteFeedBack(question_id));

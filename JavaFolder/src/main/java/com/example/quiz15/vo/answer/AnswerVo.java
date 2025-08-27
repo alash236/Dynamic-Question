@@ -23,8 +23,7 @@ public class AnswerVo {
 
     @NotBlank(message = USERNAME_ERROR)
     private String username;
-
-    @NotEmpty(message = ANSWERLIST_ERROR)
+    
     private List<String> answeroption;
 
     public int getQuestion_id() {

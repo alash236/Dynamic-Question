@@ -6,5 +6,6 @@ import com.example.quiz15.vo.feedback.FeedBackRes;
 public interface FeedBackService {
     public FeedBackRep addFeedBack(FeedBackRes feedBackRes);
     public FeedBackRep searchFeedBack();
+    public FeedBackRep searchFeedBackEmail(String email);
     public FeedBackRep deleteFeedBack(int question_id);
 }

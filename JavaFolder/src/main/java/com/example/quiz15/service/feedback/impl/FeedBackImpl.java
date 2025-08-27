@@ -35,6 +35,16 @@ public class FeedBackImpl implements FeedBackService {
     }
 
     @Override
+    public FeedBackRep searchFeedBackEmail(String email) {
+        List<FeedBack> feedBack = feedBackDao.searchAllFeedBackEmail(email);
+        if(feedBack==null)return new FeedBackRep(404,"找不到填寫資訊");
+        for(FeedBack item:feedBack){
+            if(item == null)return new FeedBackRep(404,"找不到填寫資訊");
+        }
+        return new FeedBackRep(feedBack,200,"查詢成功");
+    }
+
+    @Override
     public FeedBackRep deleteFeedBack(int question_id) {
         feedBackDao.deleteFeedBack(question_id);
         return new FeedBackRep(200,"刪除成功!!!");

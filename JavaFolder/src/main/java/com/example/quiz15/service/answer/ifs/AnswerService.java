@@ -15,4 +15,8 @@ public interface AnswerService {
     public AnswerResponse searchSingleAnswer(int question_id,String username);
 
     public AnswerResponse deleteAnswer(int question_id);
+
+    public AnswerResponse deleteAnswerFromMail(int question_id,String username);
+
+    public AnswerResponse searchEmailAnswer(String username);
 }

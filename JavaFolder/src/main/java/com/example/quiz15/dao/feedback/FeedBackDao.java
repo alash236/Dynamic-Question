@@ -22,6 +22,9 @@ public interface FeedBackDao extends JpaRepository<FeedBack,Integer> {
     @Query(value = "select * from feedback",nativeQuery = true)
     public List<FeedBack> searchAllFeedBack();
 
+    @Query(value = "select * from feedback where email = :email",nativeQuery = true)
+    public List<FeedBack> searchAllFeedBackEmail(String email);
+
     @Modifying
     @Transactional
     @Query(value ="delete from feedback where question_id = :question_id" ,nativeQuery = true)

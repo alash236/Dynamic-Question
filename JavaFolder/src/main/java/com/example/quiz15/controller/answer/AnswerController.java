@@ -21,6 +21,11 @@ public class AnswerController {
         return ResponseEntity.ok(answerService.searchSingleAnswer(question_id,username));
     }
 
+    @GetMapping("/search/answer/email/{username}")
+    public ResponseEntity<AnswerResponse> searchEmailAnswer(@PathVariable String username){
+        return ResponseEntity.ok(answerService.searchEmailAnswer(username));
+    }
+
     @GetMapping("/search/Allanswer")
     public ResponseEntity<AnswerResponse> searchAllAnswer(){
         return ResponseEntity.ok(answerService.searchAllAnswer());
@@ -39,5 +44,11 @@ public class AnswerController {
     @DeleteMapping("/delete/answer/{question_id}")
     public ResponseEntity<AnswerResponse> deleteAnswer(@PathVariable int question_id){
         return ResponseEntity.ok(answerService.deleteAnswer(question_id));
+    }
+
+    @DeleteMapping("/delete/answerFromMail/{question_id}/{username}")
+    public ResponseEntity<AnswerResponse> deleteAnswerFromMail(@PathVariable int question_id,
+                                                               @PathVariable String username){
+        return ResponseEntity.ok(answerService.deleteAnswerFromMail(question_id,username));
     }
 }

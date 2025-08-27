@@ -95,7 +95,6 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public AnswerResponse searchSingleAnswer(int question_id, String username) {
         List<Answer> answerList = answerDao.getSingleAnswer(question_id,username);
-        System.out.println(answerList.toString());
         List<AnswerRes> res = new ArrayList<>();
         for (Answer answer : answerList) {
             try {
@@ -117,6 +116,34 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public AnswerResponse deleteAnswer(int question_id) {
         answerDao.deleteAnswer(question_id);
+        return new AnswerResponse(200,"刪除成功");
+    }
+
+    @Override
+    public AnswerResponse searchEmailAnswer(String username) {
+        List<Answer> answerList = answerDao.getEmailAnswer(username);
+        if (answerList == null) return new AnswerResponse(404, "找不到資訊");
+        List<AnswerRes> res = new ArrayList<>();
+        for (Answer answer : answerList) {
+            try {
+                AnswerRes answerRes = new AnswerRes(
+                        answer.getQuestion_id(),
+                        answer.getQuiz_id(),
+                        answer.getUsername(),
+                        answer.getAnsweroption()
+                );
+                res.add(answerRes);
+            } catch (Exception e) {
+                return new AnswerResponse(500, "資料轉換失敗: " + e.getMessage());
+            }
+        }
+        return new AnswerResponse(AnswerResMessageCodeEnum.SUCCESS_SEARCH.getCode(),
+                AnswerResMessageCodeEnum.SUCCESS_SEARCH.getMessage(), res);
+    }
+
+    @Override
+    public AnswerResponse deleteAnswerFromMail(int question_id, String username) {
+        answerDao.deleteAnswerFromMail(question_id,username);
         return new AnswerResponse(200,"刪除成功");
     }
 }
